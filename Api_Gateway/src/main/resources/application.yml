@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+        routes:
+        - id: USER-SERVICE
+          uri: http://localhost:8018/customer
+          predicates:
+            - Path=/customer/**
+            
+        - id: PRODUCT-SERVICE
+          uri: http://localhost:8021/product_info
+          predicates:
+            - Path=/product_info/**
+            
+        - id: PHONE-SERVICE
+          uri: http://localhost:8006/phones
+          predicates:
+            - Path=/phones/**
+
+
+  main:
+    web-application-type: REACTIVE
+
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+                  
+server:
+  port: 8182
