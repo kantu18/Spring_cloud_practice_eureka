@@ -1,0 +1,55 @@
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: PRODUCT-SERVICE
+    
+    
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/employeestore
+    username: root
+  
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      product_fallback:
+        register-health-indicator: true
+        event-consumer-buffer-size: 10
+        failure-rate-threshold: 40
+        minimum-number-of-calls: 4
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 3
+        wait-duration-in-open-state: 5s
+        sliding-window-size: 10
+        sliding-window-type: COUNT_BASED
+
+server:
+  port: 8021
