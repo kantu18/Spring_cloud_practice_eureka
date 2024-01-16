@@ -62,3 +62,9 @@ resilience4j:
 
 server:
   port: 8018
+  
+  
+sonar: 
+  projectkey: user_service
+  projectname: user_service 
+  host-url: http://localhost:9000
